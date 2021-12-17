@@ -1,0 +1,14 @@
+name: DNF
+
+commands:
+  - dnf
+
+wrapper:
+  sudo: true
+  install: dnf install -y {0}
+  remove: dnf remove -y {0}
+  upgrade: dnf upgrade -y
+  update: dnf update -y
+  clean: dnf clean -y
+  autoremove: dnf autoremove -y
+  whatprovides: dnf provides {0} | cut -d' ' -f1 | grep -v '^$' | grep -v 'Repo' | grep -v 'Matched' | grep -v 'Provide' | grep -v 'Last'

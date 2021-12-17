@@ -1,0 +1,15 @@
+name: APT
+
+commands:
+  - apt
+  - dpkg
+
+wrapper:
+  sudo: true
+  install: apt install -y {0}
+  remove: apt remove -y {0}
+  upgrade: apt upgrade -y
+  update: apt update -y
+  clean: apt clean -y
+  autoremove: apt autoremove -y
+  whatprovides: "dpkg -S {0} | cut -d: -f1"

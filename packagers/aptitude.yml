@@ -1,0 +1,15 @@
+name: Aptitude
+
+commands:
+  - aptitude
+  - dpkg
+  
+wrapper:
+  sudo: true
+  install: aptitude install -y {0}
+  remove: aptitude remove -y {0}
+  upgrade: aptitude upgrade -y
+  update: aptitude update -y
+  clean: aptitude clean -y
+  autoremove: aptitude autoremove -y
+  whatprovides: "dpkg -S {0} | cut -d: -f1"

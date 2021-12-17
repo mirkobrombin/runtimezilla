@@ -1,0 +1,24 @@
+properties:
+  name: test
+  version: 0.1
+  description: This is a test
+  author: mirkobrombin
+  license: MIT
+  url: https://mirko.pm
+
+packager: DNF
+
+system:
+  name: Fedora
+  min_version: 35
+  max_version: 
+  
+ingredients:
+    - name: libdl.so.2
+      package: 
+      source: /lib/libdl.so.2
+      type: lib32 # supported: lib32, lib64, bin
+    - name: libanl.so.1
+      package: # if Null, find what package provides it
+      source: # if Null, find it in the package source structure
+      type: lib32
