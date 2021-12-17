@@ -48,7 +48,7 @@ class Validator:
                 "name": And(Use(str)),
                 "package": And(Use(str)) or None,
                 "source": And(Use(str)) or None,
-                "type": And(Use(str), lambda x: x in ['lib32', 'lib64', 'bin'])
+                "type": And(Use(str), lambda x: x in ['lib', 'lib32', 'lib64', 'bin'])
             }
         ]
     })

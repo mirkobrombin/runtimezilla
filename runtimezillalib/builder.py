@@ -103,6 +103,7 @@ class Builder:
                     '/usr/lib/x86_64-linux-gnu'
                 ]
             }
+            paths["lib"] = paths["lib32"] + paths["lib64"]
             if scope in paths.keys():
                 use_paths = paths[scope]
             else:

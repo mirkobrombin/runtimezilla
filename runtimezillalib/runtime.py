@@ -41,11 +41,14 @@ class Runtime:
             'lib32': os.path.join(self.output, 'lib32'),
             'lib64': os.path.join(self.output, 'lib64')
         }
+        self.paths['lib'] = [self.paths['lib32'], self.paths['lib64']]
     
     def init(self):
         log(["Initializing runtime"])
-        for path in self.paths.values():
-            os.makedirs(path, exist_ok=True)
+        for path in self.paths:
+            if path == "lib":
+                continue
+            os.makedirs(self.paths[path], exist_ok=True)
         
         with open(os.path.join(self.output, 'manifest.yml'), 'w') as f:
             yaml.dump(self.properties, f)
@@ -56,7 +59,11 @@ class Runtime:
         if dest not in self.paths:
             raise Exception(f"Destination {dest} not found")
 
-        shutil.copy(file, self.paths[dest])
+        if dest == "lib":
+            shutil.copy(file, self.paths["lib32"])
+            shutil.copy(file, self.paths["lib64"])
+        else:
+            shutil.copy(file, self.paths[dest])
         return True
 
     def compress(self):

@@ -21,4 +21,4 @@ ingredients:
     - name: libanl.so.1
       package: # if Null, find what package provides it
       source: # if Null, find it in the package source structure
-      type: lib32
+      type: lib
