@@ -148,3 +148,5 @@ cython_debug/
 *.tar.gz
 /env
 /runtime_test
+output.txt
+log.txt
