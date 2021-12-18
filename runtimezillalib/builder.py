@@ -88,8 +88,6 @@ class Builder:
                 scope=_type,
                 find=_source is None
             )
-                    
-            exit() # debug
 
         log([
             "All ingredients are processed:",
@@ -104,6 +102,7 @@ class Builder:
     def copy_to_runtime(self, file: str, scope: str, find: bool = False):
         if find:
             log([f"Path to {file} is not specified, searching in current system"])
+            exit() # debug
             paths = {
                 "bin": [
                     '/bin',
