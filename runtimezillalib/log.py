@@ -22,7 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
 
+import os
+
+
 def log(text: list):
+    if not os.path.exists('log.txt'):
+        with open('log.txt', 'w') as f:
+            f.write('')
     divider = "-------------------------------------------------------"
     print(divider)
     for line in text:
@@ -31,3 +37,8 @@ def log(text: list):
                 print("\t - " + subline)
         else:
             print(line)
+
+
+    with open('log.txt', 'a') as f:
+        for line in text:
+            f.write(line + '\n')
