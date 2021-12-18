@@ -137,6 +137,7 @@ class Builder:
     def search_in_system(self, name: str, paths: list):
         log([f"Searching for {name}"])
         for path in paths:
+            log([f"Searching in {path}"])
             if os.path.exists(f'{path}/{name}'):
                 return f'{path}/{name}'
         return False
