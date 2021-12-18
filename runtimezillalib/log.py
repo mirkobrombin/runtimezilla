@@ -41,4 +41,8 @@ def log(text: list):
 
     with open('log.txt', 'a') as f:
         for line in text:
-            f.write(line + '\n')
+            if isinstance(line, list):
+                for subline in line:
+                    f.write("\t - " + subline + "\n")
+            else:
+                f.write(line + "\n")
