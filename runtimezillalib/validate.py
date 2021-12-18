@@ -79,7 +79,6 @@ class Validator:
 
     @staticmethod
     def test_recipe(recipe:dict):
-        from pprint import pprint
         return Validator.test(recipe, Validator.recipe_schema)
         
     @staticmethod
