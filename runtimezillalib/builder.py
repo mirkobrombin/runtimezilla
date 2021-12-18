@@ -76,8 +76,6 @@ class Builder:
                     }
                 else:
                     self.result['missing'].append(_name)
-                    
-        exit() # debug
 
         # pack found in runtime
         for file in self.result['found']:
@@ -90,6 +88,8 @@ class Builder:
                 scope=_type,
                 find=_source is None
             )
+                    
+            exit() # debug
 
         log([
             "All ingredients are processed:",
