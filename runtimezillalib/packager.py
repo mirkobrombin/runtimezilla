@@ -28,6 +28,7 @@ import subprocess
 from glob import glob
 
 from runtimezillalib.result import Result
+from runtimezillalib.log import log
 
 
 class Packager:
@@ -80,6 +81,7 @@ class PackagerWrapper:
         )
     
     def whatprovides(self, package: str, install: bool = False):
+        log([f"Looking for whatprovides {package}"])
         cmd = self.packager["wrapper"]["whatprovides"].format(package)
         res = self.__exec(cmd)
         res.data["packages"] = res.data["stdout"].split("\n")
@@ -91,26 +93,32 @@ class PackagerWrapper:
         return res        
     
     def install(self, package: str):
+        log([f"Installing {package}"])
         cmd = self.packager["wrapper"]["install"].format(package)
         return self.__exec(cmd)
         
     def remove(self, package: str):
+        log([f"Removing {package}"])
         cmd = self.packager["wrapper"]["remove"].format(package)
         return self.__exec(cmd)
     
     def upgrade(self):
+        log(["Upgrading"])
         cmd = self.packager["wrapper"]["upgrade"]
         return self.__exec(cmd)
     
     def update(self):
+        log(["Updating"])
         cmd = self.packager["wrapper"]["update"]
         return self.__exec(cmd)
     
     def clean(self):
+        log(["Cleaning"])
         cmd = self.packager["wrapper"]["clean"]
         return self.__exec(cmd)
     
     def autoremove(self):
+        log(["Autoremoving"])
         cmd = self.packager["wrapper"]["autoremove"]
         return self.__exec(cmd)
     

@@ -92,7 +92,7 @@ class Builder:
         log([
             "All ingredients are processed:",
             f"Found [{len(self.result['found'])}]:",
-            self.result['found'].keys(),
+            [k for k in self.result['found'].keys()],
             f"Missing [{len(self.result['missing'])}]:",
             self.result['missing']
         ])
