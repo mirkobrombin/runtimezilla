@@ -45,13 +45,8 @@ class Validator:
         },
         "ingredients": [
             {
-                "files": [
-                    {
-                        And(Use(str)): And(Use(str)) or None
-                    }
-                ],
-                "package": And(Use(str)) or None,
-                "type": And(Use(str), lambda x: x in ['lib', 'lib32', 'lib64', 'bin'])
+                "files": [And(Use(str))],
+                "package": And(Use(str)) or None
             }
         ]
     })

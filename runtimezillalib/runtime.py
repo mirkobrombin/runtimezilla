@@ -34,37 +34,23 @@ class Runtime:
 
     def __init__(self, properties: dict, output: str):
         self.properties = properties
-        self.output = output
-        self.paths = {
-            'runtime': self.output,
-            'bin': os.path.join(self.output, 'bin'),
-            'lib32': os.path.join(self.output, 'lib32'),
-            'lib64': os.path.join(self.output, 'lib64')
-        }
-        self.paths['lib'] = [self.paths['lib32'], self.paths['lib64']]
+        self.output = os.path.abspath(output)
     
     def init(self):
         log(["Initializing runtime"])
-        for path in self.paths:
-            if path == "lib":
-                continue
-            os.makedirs(self.paths[path], exist_ok=True)
+        os.makedirs(self.output, exist_ok=True)
         
         with open(os.path.join(self.output, 'manifest.yml'), 'w') as f:
             yaml.dump(self.properties, f)
 
     
-    def copy(self, file: str, dest: str):
+    def copy(self, file: str):
         log([f"Copying {file} to runtime"])
         try:
-            if dest not in self.paths:
-                raise Exception(f"Destination {dest} not found")
-
-            if dest == "lib":
-                shutil.copy(file, self.paths["lib32"])
-                shutil.copy(file, self.paths["lib64"])
-            else:
-                shutil.copy(file, self.paths[dest])
+            dirname = os.path.dirname(file)
+            dest_path = f"{self.output}/{dirname}".replace('//', '/')
+            os.makedirs(dest_path, exist_ok=True)
+            shutil.copy(file, os.path.join(dest_path, os.path.basename(file)))
         except Exception as e:
             log([f"Error copying {file} to runtime: {e}"])
             return False
