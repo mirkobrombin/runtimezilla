@@ -36,7 +36,7 @@ class Builder:
         self.output = output
         self.runtime = Runtime(self.recipe["properties"], self.output)
         self.result = {
-            'found': [],
+            'found': {},
             'missing': []
         }
 
@@ -47,24 +47,41 @@ class Builder:
 
         # install packages
         for ingredient in self.recipe['ingredients']:
-            _name = ingredient.get('name')
             _package = ingredient.get('package')
+            _type = ingredient.get('type')
 
             if _package is not None:
+                '''
+                If the ingredient defines a package, install it before
+                processing all files. If not, look for which package
+                provides each file.
+                '''
                 _res = self.packager_wrapper.install(_package)
-            else:
-                _res = self.packager_wrapper.whatprovides(_name, install=True)
-            
-            if _res.status:
-                self.result['found'].append(_name)
-            else:
-                self.result['missing'].append(_name)
+
+            for file in ingredient['files']:
+                _name = list(file.keys())[0]
+                _source = file[_name]
+
+                if _package is None:
+                    '''
+                    Package was not installed, so we need to find which
+                    one provides the needed file.
+                    '''
+                    _res = self.packager_wrapper.whatprovides(_name, install=True)
+                
+                if _res.status:
+                    self.result['found'][_name] = {
+                        'source': _source,
+                        'type': _type,
+                    }
+                else:
+                    self.result['missing'].append(_name)
 
         # pack found in runtime
         for file in self.result['found']:
-            _ingredient = [i for i in self.recipe['ingredients'] if i['name'] == file][0]
-            _source = _ingredient.get('source')
-            _type = _ingredient.get('type')
+            _file = self.result['found'][file]
+            _source = _file.get('source')
+            _type = _file.get('type')
 
             self.copy_to_runtime(
                 file=_source if _source else file,
@@ -75,7 +92,7 @@ class Builder:
         log([
             "All ingredients are processed:",
             f"Found [{len(self.result['found'])}]:",
-            self.result['found'],
+            self.result['found'].keys(),
             f"Missing [{len(self.result['missing'])}]:",
             self.result['missing']
         ])
