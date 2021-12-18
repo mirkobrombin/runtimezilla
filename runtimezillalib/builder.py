@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
 
-from glob import glob
+import os
 
 from runtimezillalib.packager import PackagerWrapper
 from runtimezillalib.runtime import Runtime
@@ -136,10 +136,9 @@ class Builder:
     
     def search_in_system(self, name: str, paths: list):
         log([f"Searching for {name}"])
-        exit()
         for path in paths:
-            for file in glob(f"{path}/**/{name}", recursive=True):
-                return file
+            if os.path.exists(f'{path}/{name}'):
+                return f'{path}/{name}'
         return False
 
     def build(self):
