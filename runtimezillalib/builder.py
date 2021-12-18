@@ -76,7 +76,8 @@ class Builder:
                     }
                 else:
                     self.result['missing'].append(_name)
-                exit() # debug
+                    
+        exit() # debug
 
         # pack found in runtime
         for file in self.result['found']:
