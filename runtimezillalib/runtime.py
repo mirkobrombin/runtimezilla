@@ -56,19 +56,14 @@ class Runtime:
     
     def copy(self, file: str, dest: str):
         log([f"Copying {file} to runtime"])
-        try:
-            if dest not in self.paths:
-                return False
+        if dest not in self.paths:
+            raise Exception(f"Destination {dest} not found")
 
-            if dest == "lib":
-                shutil.copy(file, self.paths["lib32"])
-                shutil.copy(file, self.paths["lib64"])
-            else:
-                shutil.copy(file, self.paths[dest])
-        except Exception as e:
-            log([f"Error while copying {file} to runtime: {e}"])
-            return False
-            
+        if dest == "lib":
+            shutil.copy(file, self.paths["lib32"])
+            shutil.copy(file, self.paths["lib64"])
+        else:
+            shutil.copy(file, self.paths[dest])
         return True
 
     def compress(self):

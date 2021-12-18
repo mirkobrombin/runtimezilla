@@ -136,6 +136,7 @@ class Builder:
     
     def search_in_system(self, name: str, paths: list):
         log([f"Searching for {name}"])
+        exit()
         for path in paths:
             for file in glob(f"{path}/**/{name}", recursive=True):
                 return file
