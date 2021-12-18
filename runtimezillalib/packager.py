@@ -73,7 +73,7 @@ class PackagerWrapper:
         )
         stdout, stderr = res.communicate()
         return Result(
-            status=res.returncode == 0,
+            status=res.returncode in [0, 255],
             data={
                 "stdout": stdout.decode('utf-8'),
                 "stderr": stderr.decode('utf-8')
