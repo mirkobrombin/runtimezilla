@@ -1,0 +1,14 @@
+name: Pacman
+
+commands:
+  - pacman
+
+wrapper:
+  sudo: true
+  install: pacman -S --noconfirm {0}
+  remove: pacman -R --noconfirm {0}
+  upgrade: pacman -Syu --noconfirm
+  update: pacman -Syy --noconfirm
+  clean: pacman -Sc --noconfirm
+  autoremove: pacman -R --noconfirm $(pacman -Qdtq)
+  whatprovides: "pacman -Fy {0} | cut -d' ' -f1"
