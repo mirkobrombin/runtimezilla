@@ -90,7 +90,7 @@ class Builder:
     
     def copy_to_runtime(self, file: str):
         files = self.search_in_system(file)
-        if not file:
+        if not files:
             log([f"{file} not found in current system, skipping"])
             return False
                 
